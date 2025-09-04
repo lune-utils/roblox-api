@@ -38,7 +38,7 @@ function Client.Prototype.getClothingTemplate(self: Client, assetId: number, dow
 		error("Could not extract nested assetId from template")
 	end
 
-	local assetImageData = self:fetchAsset(tonumber(nestedId) :: number)
+	local assetImageData = self:fetchAssetUrl(tonumber(nestedId) :: number)
 
 	if not assetImageData.success then
 		error("Could not fetch asset data")
@@ -53,14 +53,21 @@ function Client.Prototype.setCookie(self: Client, cookie: string): Client
 	return self
 end
 
+function Client.Prototype.setApiKey(self: Client, api_key: string): Client
+	self.api_key = api_key
+
+	return self
+end
+
 function Client.Prototype.sync(self: Client)
 	assetDeliveryBehaviour.inheritMethods(self)
 	gamesBehaviour.inheritMethods(self)
 end
 
-function Client.Interface.new(cookie: string?): Client
+function Client.Interface.new(cookie: string?, api_key: string?): Client
 	local self = setmetatable({
 		cookie = cookie,
+		api_key = api_key,
 	}, {
 		__index = Client.Prototype,
 	})
@@ -72,6 +79,7 @@ end
 
 export type Client = typeof(Client.Prototype) & {
 	cookie: string,
+	api_key: string,
 } & assetDeliveryBehaviour.AssetDeliveryBehaviour & gamesBehaviour.GamesBehaviour
 
 return Client.Interface
