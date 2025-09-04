@@ -58,7 +58,7 @@ function Client.Prototype.sync(self: Client)
 	gamesBehaviour.inheritMethods(self)
 end
 
-function Client.Interface.new(cookie: string?, api_key: string?): Client
+function Client.Interface.new(cookie: string?): Client
 	local self = setmetatable({
 		cookie = cookie,
 	}, {

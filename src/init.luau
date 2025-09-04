@@ -1,3 +1,7 @@
+local Client = require("@self/Client")
+
+export type Client = Client.Client
+
 return {
-	Client = require("@self/ClientBuilder"),
+	Client = Client,
 }
